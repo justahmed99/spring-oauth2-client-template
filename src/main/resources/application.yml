@@ -1,0 +1,30 @@
+server:
+  port: 9091
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:28080/realms/image-project/protocol/openid-connect/auth
+            token-uri: http://localhost:28080/realms/image-project/protocol/openid-connect/token
+            user-info-uri: http://localhost:28080/realms/image-project/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:28080/realms/image-project/protocol/openid-connect/certs
+            issuer-uri: http://localhost:28080/realms/image-project
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:28080/realms/image-project/protocol/openid-connect/certs
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.boot.autoconfigure.security: DEBUG
+    org.springframework.boot.autoconfigure.security.oauth2: DEBUG
